@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+    container_name: es01
+    environment:
+      - discovery.type=single-node # Apenas um nó
+      - xpack.security.enabled=false # Desativa a necessidade de certificados para comunicação. Apenas para desenvolvimento!!!
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g # Limita o uso de memória para 1GB
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+
+volumes:
+  esdata01:
+    driver: local
